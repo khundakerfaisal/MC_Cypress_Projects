@@ -6,7 +6,8 @@ module.exports = defineConfig({
       
       config.specPattern=
       [
-        'cypress/e2e/login.cy.js',
+        'cypress/e2e/MCTestRunner/login.cy.js',
+        'cypress/e2e/MCTestRunner/enquiry.cy.js'
 
       ]
       return config;
