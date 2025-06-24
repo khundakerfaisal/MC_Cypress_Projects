@@ -1,32 +1,36 @@
 const { defineConfig } = require("cypress");
-const fs = require('fs'); // Required to read/write files
+const fs = require('fs');
+const path = require('path');
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // TASK: Ensure file exists or is initialized
+      const filePath = path.resolve('cypress/fixtures/lastName.json');
+
+      // Register custom tasks
       on('task', {
+        // Task: Ensure file exists, or create it with default value
         ensureLastNameFile() {
-          const filePath = 'cypress/fixtures/lastName.json';
           if (!fs.existsSync(filePath)) {
-            fs.writeFileSync(filePath, JSON.stringify([{ lastName: 'Postpaid-0' }], null, 2));
-          } else {
-            const fileData = fs.readFileSync(filePath, 'utf-8');
-            if (!fileData || fileData.trim() === '') {
-              fs.writeFileSync(filePath, JSON.stringify([{ lastName: 'Postpaid-0' }], null, 2));
-            }
+            fs.writeFileSync(
+              filePath,
+              JSON.stringify([{ lastName: "User-0" }], null, 2)
+            );
           }
           return null;
         },
 
-        // TASK: Write updated JSON back to file
+        // Task: Write updated data back to file
         writeLastName(data) {
-          fs.writeFileSync('cypress/fixtures/lastName.json', JSON.stringify(data, null, 2));
+          fs.writeFileSync(
+            filePath,
+            JSON.stringify(data, null, 2)
+          );
           return null;
         }
       });
 
-      // Keep your test file
+      // Specify which spec files to include in test run
       config.specPattern = [
         'cypress/e2e/MCTestRunner/login.cy.js',
         'cypress/e2e/MCTestRunner/enquiry.cy.js'
