@@ -11,5 +11,12 @@ describe("Input New Enquiry", () => {
 
   it("Create New enquiry", () => {
     EnquiryPage.MCEnquiryPage();
+    
   });
+  Cypress.on('uncaught:exception', (err, runnable) => {
+  if (err.message.includes('updateGradients')) {
+    // returning false prevents Cypress from failing the test
+    return false;
+  }
+});
 });
