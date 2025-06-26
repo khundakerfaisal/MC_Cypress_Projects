@@ -1,9 +1,9 @@
 const { defineConfig } = require("cypress");
-const fs = require('fs');
-const path = require('path');
 
 module.exports = defineConfig({
   e2e: {
+    defaultCommandTimeout: 5000,
+    pageLoadTimeout: 60000, 
     setupNodeEvents(on, config) {
       config.specPattern = [
         'cypress/e2e/MCTestRunner/login.cy.js',
